@@ -53,15 +53,15 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         
         audioManager = (AudioManager) cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
         // audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
-        audioManager.setSpeakerphoneOn(true);
+        // audioManager.setSpeakerphoneOn(true);
         
         tts = new TextToSpeech(cordova.getActivity().getApplicationContext(), this);
         tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String s) {
                 // do nothing
-                audioManager.setBluetoothScoOn(false);
-                audioManager.setSpeakerphoneOn(true);
+                // audioManager.setBluetoothScoOn(false);
+                // audioManager.setSpeakerphoneOn(true);
             }
 
             @Override
@@ -70,8 +70,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.success();
                 }
-                audioManager.setBluetoothScoOn(true);
-                audioManager.setSpeakerphoneOn(false);
+                // audioManager.setBluetoothScoOn(true);
+                // audioManager.setSpeakerphoneOn(false);
             }
 
             @Override
@@ -80,8 +80,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.error(ERR_UNKNOWN);
                 }
-                audioManager.setBluetoothScoOn(true);
-                audioManager.setSpeakerphoneOn(false);
+                // audioManager.setBluetoothScoOn(true);
+                // audioManager.setSpeakerphoneOn(false);
             }
         });
     }
@@ -168,8 +168,8 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
-        audioManager.setBluetoothScoOn(false);
-        audioManager.setSpeakerphoneOn(true);
+        // audioManager.setBluetoothScoOn(false);
+        // audioManager.setSpeakerphoneOn(true);
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
     }
 }
