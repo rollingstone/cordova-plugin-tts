@@ -60,6 +60,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
             @Override
             public void onStart(String s) {
                 // do nothing
+                audioManager.setBluetoothScoOn(false);
                 audioManager.setSpeakerphoneOn(true);
             }
 
@@ -69,6 +70,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.success();
                 }
+                audioManager.setBluetoothScoOn(true);
                 audioManager.setSpeakerphoneOn(false);
             }
 
@@ -78,6 +80,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.error(ERR_UNKNOWN);
                 }
+                audioManager.setBluetoothScoOn(true);
                 audioManager.setSpeakerphoneOn(false);
             }
         });
@@ -165,6 +168,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
+        audioManager.setBluetoothScoOn(false);
         audioManager.setSpeakerphoneOn(true);
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
     }
