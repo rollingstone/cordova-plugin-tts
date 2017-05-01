@@ -52,7 +52,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     public void initialize(CordovaInterface cordova, final CordovaWebView webView) {
         
         audioManager = (AudioManager) cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
-        audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
+        // audioManager.setMode(AudioManager.MODE_IN_COMMUNICATION);
         audioManager.setSpeakerphoneOn(true);
         
         tts = new TextToSpeech(cordova.getActivity().getApplicationContext(), this);
