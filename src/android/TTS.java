@@ -17,6 +17,13 @@ import android.speech.tts.UtteranceProgressListener;
 import java.util.HashMap;
 import java.util.Locale;
 
+
+import android.media.AudioManager;
+import android.media.AudioRecord;
+import android.media.audiofx.NoiseSuppressor;
+import android.os.Build;
+import android.content.Context;
+
 /*
     Cordova Text-to-Speech Plugin
     https://github.com/vilic/cordova-plugin-tts
@@ -34,16 +41,26 @@ public class TTS extends CordovaPlugin implements OnInitListener {
     public static final String ERR_ERROR_INITIALIZING = "ERR_ERROR_INITIALIZING";
     public static final String ERR_UNKNOWN = "ERR_UNKNOWN";
 
+    private AudioManager audioManager;// = (AudioManager) cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+
     boolean ttsInitialized = false;
     TextToSpeech tts = null;
 
+
+
     @Override
     public void initialize(CordovaInterface cordova, final CordovaWebView webView) {
+        
+        audioManager = (AudioManager) cordova.getActivity().getSystemService(Context.AUDIO_SERVICE);
+
+        audioManager.setSpeakerphoneOn(true);
+        
         tts = new TextToSpeech(cordova.getActivity().getApplicationContext(), this);
         tts.setOnUtteranceProgressListener(new UtteranceProgressListener() {
             @Override
             public void onStart(String s) {
                 // do nothing
+                audioManager.setSpeakerphoneOn(true);
             }
 
             @Override
@@ -52,6 +69,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.success();
                 }
+                audioManager.setSpeakerphoneOn(false);
             }
 
             @Override
@@ -60,6 +78,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
                     CallbackContext context = new CallbackContext(callbackId, webView);
                     context.error(ERR_UNKNOWN);
                 }
+                audioManager.setSpeakerphoneOn(false);
             }
         });
     }
@@ -146,6 +165,7 @@ public class TTS extends CordovaPlugin implements OnInitListener {
         tts.setLanguage(new Locale(localeArgs[0], localeArgs[1]));
         tts.setSpeechRate((float) rate);
 
+        audioManager.setSpeakerphoneOn(true);
         tts.speak(text, TextToSpeech.QUEUE_FLUSH, ttsParams);
     }
 }
