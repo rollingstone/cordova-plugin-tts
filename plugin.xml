@@ -37,14 +37,19 @@
   <!-- android -->
   <platform name="android">
     <config-file target="config.xml" parent="/*">
-      <uses-permission android:name="android.permission.RECORD_AUDIO" />
-      <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
        
       <feature name="TTS">
         <param name="android-package" value="com.wordsbaking.cordova.tts.TTS" />
         <param name="onload" value="true" />
       </feature>
     </config-file>
+
+    <config-file target="AndroidManifest.xml" parent="/*">
+      <uses-permission android:name="android.permission.RECORD_AUDIO" />
+      <uses-permission android:name="android.permission.MODIFY_AUDIO_SETTINGS" />
+    </config-file>
+
+
     <source-file src="src/android/TTS.java" target-dir="src/com/wordsbaking/cordova/tts" />
   </platform>
 </plugin>
